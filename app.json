@@ -27,7 +27,7 @@
     "large": "assets/images/large.png",
     "small": "assets/images/small.png"
   },
-    "drivers": [
+  "drivers": [
     {
       "id": "lightify_plug",
       "name": {
@@ -576,6 +576,56 @@
           "attr": {
             "min": 0,
             "max": 6553
+          }
+        }
+      ]
+    },
+    {
+      "id": "lightify_switch_mini",
+      "name": {
+        "en": "Switch Mini (ZigBee)",
+        "nl": "Switch Mini (ZigBee)"
+      },
+      "class": "sensor",
+      "capabilities": [
+        "alarm_battery",
+        "measure_battery"
+      ],
+      "images": {
+        "large": "drivers/lightify_switch_mini/assets/images/large.png",
+        "small": "drivers/lightify_switch_mini/assets/images/small.png"
+      },
+      "zigbee": {
+        "manufacturerName": "OSRAM",
+        "productId": [
+          "Lightify Switch Mini",
+          "Lightify Switch Mini\u0000"
+        ],
+        "deviceId": 2064,
+        "profileId": 260,
+        "learnmode": {
+          "instruction": {
+            "en": "Toggle the bulb to start pairing.\n\nIf pairing does not automatically start within xx seconds, try resetting the device by toggling it x times (one toggle: 5 seconds off, 5 seconds on). It will flash to indicate it has been reset.",
+            "nl": "Zet de lamp uit en weer aan.\n\nWordt de lamp niet automatisch toegevoegd binnen 20 seconden, probeer dan de lamp te resetten door het 6 keer te schakelen (één keer schakelen: 5 seconden uit, 5 seconden aan). De lamp zal knipperen om aan te geven dat hij is gereset."
+          }
+        }
+      },
+      "settings": [
+        {
+          "id": "battery_threshold",
+          "type": "number",
+          "label": {
+            "en": "Battery alarm threshold (%)",
+            "nl": "Batterij alarm waarde (%)"
+          },
+          "hint": {
+            "en": "Battery level (%) below which the battery alarm will be activated.\nRange: 1 - 90, \ndefault: 20 [%]",
+            "nl": "Battery niveau (%) waarbij het batterij alarm geactiveerd wordt.\nBereik: 1 - 90, \nstandaard: 20 [%]"
+          },
+          "value": 20,
+          "attr": {
+            "min": 1,
+            "max": 90
           }
         }
       ]
