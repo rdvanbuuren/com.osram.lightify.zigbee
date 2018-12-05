@@ -20,8 +20,18 @@ class LightifySwitchMiniZigBee extends ZigBeeDevice {
             1: { scene: 'Long press' }
         };
 
-        this.registerAttrReportListener('genOnOff', 'cmdOn', 1, 3600, 1,
-            this.onOnOffListener.bind(this), 0)
+        // TODO: is this for testing purposes?
+        this.registerAttrReportListener('genOnOff', 'attReport', 1, 3600, 1, this.onOnOffListener.bind(this), 0)
+            .then(() => {
+				// Registering attr reporting succeeded
+				this.log('registered attr report listener - genOnOff - attReport');
+			})
+            .catch(err => {
+                // Registering attr reporting failed
+                this.error('failed to register attr report listener - genOnOff - attReport', err);
+            });
+
+        this.registerAttrReportListener('genOnOff', 'cmdOn', 1, 3600, 1, this.onOnOffListener.bind(this), 0)
             .then(() => {
 				// Registering attr reporting succeeded
 				this.log('registered attr report listener - genOnOff - cmdOn');
@@ -31,8 +41,7 @@ class LightifySwitchMiniZigBee extends ZigBeeDevice {
                 this.error('failed to register attr report listener - genOnOff - cmdOn', err);
             });
 
-        this.registerAttrReportListener('genOnOff', 'cmdOff', 1, 3600, 1,
-            this.onOnOffListener.bind(this), 0)
+        this.registerAttrReportListener('genOnOff', 'cmdOff', 1, 3600, 1, this.onOnOffListener.bind(this), 0)
             .then(() => {
 				// Registering attr reporting succeeded
 				this.log('registered attr report listener - genOnOff - cmdOff');
