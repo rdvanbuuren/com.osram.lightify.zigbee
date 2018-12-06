@@ -20,47 +20,53 @@ class LightifySwitchMiniZigBee extends ZigBeeDevice {
             1: { scene: 'Long press' }
         };
 
-        // TODO: is this for testing purposes?
-        this.registerAttrReportListener('genOnOff', 'attReport', 1, 3600, 1, this.onOnOffListener.bind(this), 0)
-            .then(() => {
-				// Registering attr reporting succeeded
-				this.log('registered attr report listener - genOnOff - attReport');
-			})
-            .catch(err => {
-                // Registering attr reporting failed
-                this.error('failed to register attr report listener - genOnOff - attReport', err);
-            });
+        // short press top button
+        this.registerAttrReportListener('genOnOff', 'cmdOn', 1, 3600, 1, this.onShortPressListener.bind(this), 'Top')
+            .then(() => this.log('registered short press listener - genOnOff - cmdOn'))
+            .catch(err => this.error('failed to register attr report listener - genOnOff - cmdOn', err));
 
-        this.registerAttrReportListener('genOnOff', 'cmdOn', 1, 3600, 1, this.onOnOffListener.bind(this), 0)
-            .then(() => {
-				// Registering attr reporting succeeded
-				this.log('registered attr report listener - genOnOff - cmdOn');
-			})
-            .catch(err => {
-                // Registering attr reporting failed
-                this.error('failed to register attr report listener - genOnOff - cmdOn', err);
-            });
+        // TODO: is this for testing purposes or middle button??
+        this.registerAttrReportListener('genOnOff', 'attReport', 1, 3600, 1, this.onShortPressListener.bind(this), 'Middle')
+            .then(() => this.log('registered short press listener - genOnOff - attReport'))
+            .catch(err => this.error('failed to register short press listener - genOnOff - attReport', err));
 
-        this.registerAttrReportListener('genOnOff', 'cmdOff', 1, 3600, 1, this.onOnOffListener.bind(this), 0)
-            .then(() => {
-				// Registering attr reporting succeeded
-				this.log('registered attr report listener - genOnOff - cmdOff');
-			})
-            .catch(err => {
-                // Registering attr reporting failed
-                this.error('failed to register attr report listener - genOnOff - cmdOff', err);
-            });
+        // short press bottom button
+        this.registerAttrReportListener('genOnOff', 'cmdOff', 1, 3600, 1, this.onShortPressListener.bind(this), 'Bottom')
+            .then(() => this.log('registered attr report listener - genOnOff - cmdOff'))
+            .catch(err => this.error('failed to register attr report listener - genOnOff - cmdOff', err));
 
+        // long press top button - on
+        this.registerAttrReportListener('genLevelCtrl', 'cmdMoveWithOnOff', 1, 3600, 1, this.onLongPressListener.bind(this), 'Top')
+            .then(() => this.log('registered long press listener - genLevelCtrl - cmdMoveWithOnOff'))
+            .catch(err => this.error('failed to register long press listener - genLevelCtrl - cmdMoveWithOnOff', err));
 
+        // long press top button - off: genLevelCtrl/cmdStop 
 
+        // long press middle button
+        this.registerAttrReportListener('lightingColorCtrl', 'cmdMoveToSaturation', 1, 3600, 1, this.onLongPressListener.bind(this), 'Middle')
+            .then(() => this.log('registered long press listener - lightingColorCtrl - cmdMoveToSaturation'))
+            .catch(err => this.error('failed to register long press listener - lightingColorCtrl - cmdMoveToSaturation', err));
+
+        // long middle button - off: lightingColorCtrl/cmdMoveHue
+
+        // long press bottom button
+        this.registerAttrReportListener('genLevelCtrl', 'cmdMove', 1, 3600, 1, this.onLongPressListener.bind(this), 'Bottom')
+            .then(() => this.log('registered long press listener - genLevelCtrl - cmdMove'))
+            .catch(err => this.error('failed to register long press listener - genLevelCtrl - cmdMove', err));
+
+       // long press bottom button - off: genLevelCtrl/cmdStop 
     }
 
     onLifelineReport(value) {
         this.log('lifeline report', new Buffer(value, 'ascii'));
     }
 
-    onOnOffListener(repScene) {
-        this.log('genOnOff - onOff', repScene, 'lastKey', lastKey, 'keyHeld', keyHeld);
+    onShortPressListener(repScene) {
+        this.log('short press', repScene, 'lastKey', lastKey, 'keyHeld', keyHeld);
+    }
+
+    onLongPressListener(repScene) {
+        this.log('long press', repScene, 'lastKey', lastKey, 'keyHeld', keyHeld);
     }
 }
 
