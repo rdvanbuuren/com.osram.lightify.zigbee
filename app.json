@@ -631,5 +631,116 @@
       ]
     }
   ],
-  "flow": {}
+  "flow": {
+    "triggers": [
+      {
+        "id": "top_button_short",
+        "title": {
+          "en": "Top button has been pressed",
+          "nl": "Bovenste knop is ingedrukt"
+        },
+        "hint": {
+          "en": "This card will trigger on top button pressed shortly.",
+          "nl": "Deze kaart wordt geactiveerd bij bovenste knop die kort ingedrukt wordt."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=lightify_switch_mini"
+          }
+        ]
+      },
+      {
+        "id": "top_button_long",
+        "title": {
+          "en": "Top button has been held",
+          "nl": "Bovenste knop is vastgehouden"
+        },
+        "hint": {
+          "en": "This card will trigger on top button held.",
+          "nl": "Deze kaart wordt geactiveerd bij bovenste knop die vastgehouden wordt."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=lightify_switch_mini"
+          }
+        ]
+      },
+      {
+        "id": "middle_button_short",
+        "title": {
+          "en": "Middle button has been pressed",
+          "nl": "Middelste knop is ingedrukt"
+        },
+        "hint": {
+          "en": "This card will trigger on middle button pressed shortly.",
+          "nl": "Deze kaart wordt geactiveerd bij middelste knop die kort ingedrukt wordt."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=lightify_switch_mini"
+          }
+        ]
+      },
+      {
+        "id": "middle_button_long",
+        "title": {
+          "en": "Middle button has been held",
+          "nl": "Middelste knop is vastgehouden"
+        },
+        "hint": {
+          "en": "This card will trigger on middle button held.",
+          "nl": "Deze kaart wordt geactiveerd bij middelste knop die vastgehouden wordt."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=lightify_switch_mini"
+          }
+        ]
+      },
+      {
+        "id": "bottom_button_short",
+        "title": {
+          "en": "Bottom button has been pressed",
+          "nl": "Onderste knop is ingedrukt"
+        },
+        "hint": {
+          "en": "This card will trigger on bottom button pressed shortly.",
+          "nl": "Deze kaart wordt geactiveerd bij onderste knop die kort ingedrukt wordt."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=lightify_switch_mini"
+          }
+        ]
+      },
+      {
+        "id": "bottom_button_long",
+        "title": {
+          "en": "Bottom button has been held",
+          "nl": "Onderste knop is vastgehouden"
+        },
+        "hint": {
+          "en": "This card will trigger on bottom button held.",
+          "nl": "Deze kaart wordt geactiveerd bij onderste knop die vastgehouden wordt."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=lightify_switch_mini"
+          }
+        ]
+      }
+    ]
+  }
 }
