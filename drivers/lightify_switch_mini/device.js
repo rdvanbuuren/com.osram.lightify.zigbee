@@ -9,64 +9,64 @@ let keyHeld = false;
 class LightifySwitchMiniZigBee extends ZigBeeDevice {
 
     async onMeshInit() {
-        this.buttonMap = {
-            Top: { button: 'Top button' },
-            Middle: { button: 'Middle button' },
-            Bottom: { button: 'Bottom button' }
-        };
 
-        this.sceneMap = {
-            0: { scene: 'Short press' },
-            1: { scene: 'Long press' }
-        };
+        this.triggerButton1_short = new Homey.FlowCardTriggerDevice('button1_pressed');
+        this.triggerButton1_short.register();
 
-        // short press top button
-        this.registerAttrReportListener('genOnOff', 'cmdOn', 1, 3600, 1, this.onShortPressListener.bind(this), 'Top')
-            .then(() => this.log('registered short press listener - genOnOff - cmdOn'))
-            .catch(err => this.error('failed to register attr report listener - genOnOff - cmdOn', err));
+        this.triggerButton1_hold = new Homey.FlowCardTriggerDevice('button1_hold');
+        this.triggerButton1_hold.register();
 
-        // TODO: is this for testing purposes or middle button??
-        this.registerAttrReportListener('genOnOff', 'attReport', 1, 3600, 1, this.onShortPressListener.bind(this), 'Middle')
-            .then(() => this.log('registered short press listener - genOnOff - attReport'))
-            .catch(err => this.error('failed to register short press listener - genOnOff - attReport', err));
+        this.triggerButton1_released = new Homey.FlowCardTriggerDevice('button1_released');
+        this.triggerButton1_released.register();
 
-        // short press bottom button
-        this.registerAttrReportListener('genOnOff', 'cmdOff', 1, 3600, 1, this.onShortPressListener.bind(this), 'Bottom')
-            .then(() => this.log('registered attr report listener - genOnOff - cmdOff'))
-            .catch(err => this.error('failed to register attr report listener - genOnOff - cmdOff', err));
+        //this.enableDebug();
 
-        // long press top button - on
-        this.registerAttrReportListener('genLevelCtrl', 'cmdMoveWithOnOff', 1, 3600, 1, this.onLongPressListener.bind(this), 'Top')
-            .then(() => this.log('registered long press listener - genLevelCtrl - cmdMoveWithOnOff'))
-            .catch(err => this.error('failed to register long press listener - genLevelCtrl - cmdMoveWithOnOff', err));
+        // print the node's info to the console
+        //this.printNode();
 
-        // long press top button - off: genLevelCtrl/cmdStop 
+        // this.node.on('command', (command) => {
+        //     console.log('------');
+        //     console.log(command);
+        //     console.log('------');
+        // });
 
-        // long press middle button
-        this.registerAttrReportListener('lightingColorCtrl', 'cmdMoveToSaturation', 1, 3600, 1, this.onLongPressListener.bind(this), 'Middle')
-            .then(() => this.log('registered long press listener - lightingColorCtrl - cmdMoveToSaturation'))
-            .catch(err => this.error('failed to register long press listener - lightingColorCtrl - cmdMoveToSaturation', err));
+        // top
+        this.registerReportListener('genOnOff', 'on', () => {
+            this.log('top button pressed');
+            this.triggerButton1_short.trigger(this, null, null);
+        }, 0);
 
-        // long middle button - off: lightingColorCtrl/cmdMoveHue
+        // top (long)
+        this.registerReportListener('genLevelCtrl', 'moveWithOnOff', () => {
+            this.log('top button hold');
+            this.triggerButton1_hold.trigger(this, null, null);
+        }, 0);
 
-        // long press bottom button
-        this.registerAttrReportListener('genLevelCtrl', 'cmdMove', 1, 3600, 1, this.onLongPressListener.bind(this), 'Bottom')
-            .then(() => this.log('registered long press listener - genLevelCtrl - cmdMove'))
-            .catch(err => this.error('failed to register long press listener - genLevelCtrl - cmdMove', err));
+        // top stop (long)
+        this.registerReportListener('genLevelCtrl', 'stop', () => {
+            this.log('top button released');
+            this.triggerButton1_released.trigger(this, null, null);
+        }, 0);
 
-       // long press bottom button - off: genLevelCtrl/cmdStop 
-    }
+        // // middle
+        // this.registerReportListener('genLevelCtrl', 'moveToLevelWithOnOff', report => {
+        //     console.log(report);
+        // }, 2);
 
-    onLifelineReport(value) {
-        this.log('lifeline report', new Buffer(value, 'ascii'));
-    }
+        // // bottom
+        // this.registerReportListener('genOnOff', 'off', report => {
+        //     console.log(report);
+        // }, 1);
 
-    onShortPressListener(repScene) {
-        this.log('short press', repScene, 'lastKey', lastKey, 'keyHeld', keyHeld);
-    }
+        // // bottom (long)
+        // this.registerReportListener('genLevelCtrl', 'move', report => {
+        //     console.log(report);
+        // }, 1);
 
-    onLongPressListener(repScene) {
-        this.log('long press', repScene, 'lastKey', lastKey, 'keyHeld', keyHeld);
+        // // bottom stop (long)
+        // this.registerReportListener('genLevelCtrl', 'stop', report => {
+        //     console.log(report);
+        // }, 1);
     }
 }
 
